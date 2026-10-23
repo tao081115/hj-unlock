@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         海角解锁器 (hj-unlock)
 // @namespace    hj-unlock
-// @version      4.5.0
+// @version      4.6.0
 // @description  海角帖子/短视频付费视频：解密播放 / 完整下载 / 12并发预取 / 长按2倍速
 // @author       -
 // @match        *://*/*
@@ -704,7 +704,15 @@
         return api('/attachment', 'POST', {
           id: vids[0].id, resource_id: Number(getResourceId()), resource_type: 'topic', line: ''
         }).then(function (res) {
-          if (!res || !res.remoteUrl) throw new Error('服务端无地址');
+          if (!res || !res.remoteUrl) {
+            throw new Error(
+              '凭证无效（当前账号未购买 ' + getResourceId() + '）\n\n' +
+              '解决办法：\n' +
+              '1. 每天签到领 20 金币\n' +
+              '2. 花 1 金币买任意一个帖子\n' +
+              '3. 点「⚙ 凭证」填入那个帖子的 id'
+            );
+          }
           return res.remoteUrl;
         });
       });
