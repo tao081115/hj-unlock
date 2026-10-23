@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         海角解锁器 (hj-unlock)
 // @namespace    hj-unlock
-// @version      4.6.0
+// @version      4.7.0
 // @description  海角帖子/短视频付费视频：解密播放 / 完整下载 / 12并发预取 / 长按2倍速
 // @author       -
 // @match        *://*/*
@@ -400,7 +400,7 @@
 
       '#hj-status{margin-top:8px;padding-top:8px;border-top:1px solid rgba(178,193,255,.12);',
       'color:#a9b6e8;font:11px/1.55 -apple-system,sans-serif;white-space:pre-wrap;word-break:break-all;',
-      'max-height:112px;overflow:auto;}',
+      'max-height:200px;overflow:auto;}',
       '#hj-status:empty{display:none;}',
 
       '#hj-player-tools{position:absolute;right:10px;top:10px;display:flex;gap:8px;z-index:5;}',
@@ -653,7 +653,15 @@
 
   function onClickCredential() {
     var cur = getResourceId();
-    var v = prompt('购买凭证（已购帖子 id）\n\n找一个你花 1 金币买过的帖子，\n把它的 id 填这里。\n\n当前：' + cur, cur);
+    var v = prompt(
+      '购买凭证（已购帖子 id）\n\n' +
+      '找一个你花 1 金币买过的帖子，\n' +
+      '把它的 id 填这里。\n\n' +
+      '帖子 id 在哪看：\n' +
+      '打开帖子详情页，地址栏 ?pid= 后面那串数字就是。\n\n' +
+      '当前：' + cur,
+      cur
+    );
     if (v === null) return;
     v = String(v).trim();
     if (!/^\d+$/.test(v)) { setStatus('id 必须是纯数字'); return; }
@@ -710,7 +718,8 @@
               '解决办法：\n' +
               '1. 每天签到领 20 金币\n' +
               '2. 花 1 金币买任意一个帖子\n' +
-              '3. 点「⚙ 凭证」填入那个帖子的 id'
+              '3. 点「⚙ 凭证」填入那个帖子的 id\n' +
+              '4. 打开帖子详情页，地址栏 ?pid= 后面那串数字就是 id'
             );
           }
           return res.remoteUrl;
